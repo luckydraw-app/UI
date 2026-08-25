@@ -1,0 +1,4 @@
+flask
+flask-restx
+flask-swagger-ui
+requests==2.32.3

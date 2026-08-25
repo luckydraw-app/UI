@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-md-5">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-success text-white">
+                Participate in Lucky Draw
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST" action="/participate">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-success w-100"
+                    >
+                        Participate
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-7">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+                Previous Winners
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-striped">
+
+                    <thead>
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Position</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for w in winners %}
+
+                    <tr>
+
+                        <td>{{ w.name }}</td>
+
+                        <td>
+
+                            {% if w.winner_type == "hourly" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Hourly
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-success">
+                                    Daily
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>{{ w.winner_position }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

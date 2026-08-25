@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    Admin Dashboard
+</h2>
+
+<div class="row mb-4">
+
+    <div class="col-md-3">
+
+        <div class="card text-bg-primary shadow">
+
+            <div class="card-body">
+
+                <h5>Total Participants</h5>
+
+                <h2>{{ submissions|length }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card text-bg-success shadow">
+
+            <div class="card-body">
+
+                <h5>Total Winners</h5>
+
+                <h2>{{ winners|length }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<ul class="nav nav-tabs" id="adminTabs">
+
+    <li class="nav-item">
+
+        <button
+            class="nav-link active"
+            data-bs-toggle="tab"
+            data-bs-target="#participants"
+        >
+            Participants
+        </button>
+
+    </li>
+
+    <li class="nav-item">
+
+        <button
+            class="nav-link"
+            data-bs-toggle="tab"
+            data-bs-target="#winners"
+        >
+            Winners
+        </button>
+
+    </li>
+
+    <li class="nav-item">
+
+        <button
+            class="nav-link"
+            data-bs-toggle="tab"
+            data-bs-target="#actions"
+        >
+            Actions
+        </button>
+
+    </li>
+
+</ul>
+
+<div class="tab-content mt-3">
+
+    <div
+        class="tab-pane fade show active"
+        id="participants"
+    >
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+                Participants
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-striped">
+
+                    <thead>
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Created</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for p in submissions %}
+
+                    <tr>
+                        <td>{{ p.name }}</td>
+                        <td>{{ p.phone }}</td>
+                        <td>{{ p.email }}</td>
+                        <td>{{ p.created_at }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div
+        class="tab-pane fade"
+        id="winners"
+    >
+
+        <div class="card shadow">
+
+            <div class="card-header bg-success text-white">
+                Winners
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-striped">
+
+                    <thead>
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th>Position</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for w in winners %}
+
+                    <tr>
+
+                        <td>{{ w.name }}</td>
+
+                        <td>{{ w.email }}</td>
+
+                        <td>
+
+                            {% if w.winner_type == "hourly" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Hourly
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-success">
+                                    Daily
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>{{ w.winner_position }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div
+        class="tab-pane fade"
+        id="actions"
+    >
+
+        <div class="card shadow">
+
+            <div class="card-header bg-dark text-white">
+                Winner Actions
+            </div>
+
+            <div class="card-body">
+
+                <div class="d-grid gap-3">
+
+                    <form
+                        method="POST"
+                        action="/admin/hourly-winner"
+                    >
+
+                        <button
+                            class="btn btn-warning btn-lg w-100"
+                            type="submit"
+                        >
+                            Pick Hourly Winner
+                        </button>
+
+                    </form>
+
+                    <form
+                        method="POST"
+                        action="/admin/daily-first"
+                    >
+
+                        <button
+                            class="btn btn-success btn-lg w-100"
+                            type="submit"
+                        >
+                            Pick Daily First Winner
+                        </button>
+
+                    </form>
+
+                    <form
+                        method="POST"
+                        action="/admin/daily-second"
+                    >
+
+                        <button
+                            class="btn btn-primary btn-lg w-100"
+                            type="submit"
+                        >
+                            Pick Daily Second Winner
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
